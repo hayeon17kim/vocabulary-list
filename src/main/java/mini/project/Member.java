@@ -52,14 +52,49 @@ public class Member {
 
   public void addVoca() {
     System.out.println("단어추가");
+    Vocabulary voca = new Vocabulary();
+    voca.setWord(Prompt.inputString("단어? "));
+    voca.setMeaning(Prompt.inputString("뜻? "));
+    voca.setExSentence(Prompt.inputString("예제? "));
+    voca.setLevel(Prompt.inputInt("레벨? "));
+    voca.setPart(Vocabulary.stringToPart(Prompt.inputString("품사? ")));
+
+
+    vocaList.add(voca);
   }
 
   public void listVoca() {
-    System.out.println("단어조회");
+    System.out.println("단어목록");
+    for(Vocabulary voca : vocaList) {
+      System.out.printf("단어 : %s, 뜻 : %s, 품사 : %s, 예제 : %s, 레벨 : %s\n",
+          voca.getWord(),
+          voca.getMeaning(),
+          Vocabulary.partToString(voca.getPart()),
+          voca.getExSentence(),
+          voca.getLevel());
+    }
+  }
+
+  public Vocabulary findByWord(String word) {
+    for (Vocabulary voca : vocaList) {
+      if (word.equals(voca.getWord())) {
+        return voca;
+      }
+    }
+    return null;
   }
 
   public void updateVoca() {
     System.out.println("단어수정");
+      Vocabulary voca = findByWord(Prompt.inputString("단어?"));
+  if (voca == null) {
+    /**
+     voca.setWord(Prompt.inputString(String.format("단어(%s)?")));
+     voca.setMeaning(Prompt.inputString(String.format("뜻(%s)?")));
+     voca.setExSentence(Prompt.inputString(String.format("예제(%s)?")));
+    voca.setLevel(Prompt.inputString(String.format("레벨(%s)?")));
+**/
+  }
   }
 
   public void deleteVoca() {

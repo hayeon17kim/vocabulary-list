@@ -30,18 +30,27 @@ public class MemberHandler {
     return null;
   }
 
-  public static Member logIn() {
-    /*
-     * System.out.println("로그인");
-     * 
-     * String id = Prompt.inputString("아이디?"); while (true) { if (findById(id) == null) {
-     * System.out.println("아이디가 일치하지 않습니다."); } else if
-     * (findById(id).getPassword().equals(Prompt.inputString("비밀번호? "))) { return findById(id); }
-     * else {
-     * 
-     * } System.out.println("다시 입력해주세요!"); }
-     */
-    return new Member();
-  }
-}
+  public Member logIn() {
+    System.out.println("아이디와 비밀번호를 입력해주세요. ");
+    System.out.println("아이디에 빈 문자열을 입력하시면 취소됩니다.");
+    while (true) {
+      String ID = Prompt.inputString("아이디: ");
+      if (ID.equals(""))
+        return null;
 
+      String password = Prompt.inputString("비밀번호: ");
+
+      if (findById(ID) == null) {
+        System.out.println("아이디를 찾을 수 없습니다.");
+
+      } else if (!findById(ID).getPassword().equals(password)) {
+        System.out.println("비밀번호가 틀렸습니다.");
+      } else {
+        System.out.printf("%s님 안녕하세요!", findById(ID));
+        return findById(ID);
+      }
+
+    }
+  }
+
+}
