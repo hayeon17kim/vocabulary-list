@@ -2,6 +2,7 @@ package mini.project;
 
 import java.util.ArrayList;
 import java.util.List;
+import mini.project.Handler.MemberHandler;
 
 public class App {
   static List<Member> memberList = new ArrayList<Member>();
@@ -9,7 +10,7 @@ public class App {
   static Member loggedInMember;
 
   public static void main(String[] args) {
-
+    
     loop:
     while (true) {
       if (loggedInMember == null) {
@@ -46,6 +47,8 @@ public class App {
           case "북마크하기":
             loggedInMember.bookmarkVoca();
             break;
+          case "북마크취소":
+            loggedInMember.cancelBookmarkVoca();
           case "로그아웃":
             loggedInMember = null;
             break;

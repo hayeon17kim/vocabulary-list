@@ -1,14 +1,27 @@
 package mini.project;
 
+import java.util.ArrayList;
 import java.util.List;
+import mini.project.Handler.VocaHandler;
 
 public class Member {
   private String name;
   private String id;
   private String password;
 
-  List<Vocabulary> vocaList;
-  List<Vocabulary> bookmarkedVocaList;
+  List<Vocabulary> vocaList = new ArrayList<Vocabulary>();
+  
+  {
+    vocaList.add(new Vocabulary("python", "파이썬"));
+    vocaList.add(new Vocabulary("javascript", "자바스크립트"));
+    vocaList.add(new Vocabulary("java", "자바"));
+    vocaList.add(new Vocabulary("kotlin", "코틀린"));
+    vocaList.add(new Vocabulary("go", "고"));
+    vocaList.add(new Vocabulary("Ruby", "루비"));
+    vocaList.add(new Vocabulary("c", "씨"));
+  }
+  
+  VocaHandler vocaHandler = new VocaHandler(vocaList);
 
   public String getName() {
     return name;
@@ -40,65 +53,31 @@ public class Member {
 
   public void setVocaList(List<Vocabulary> vocaList) {
     this.vocaList = vocaList;
+    setVocaHandler(new VocaHandler(this.vocaList));
   }
 
-  public List<Vocabulary> getBookmarkedVocaList() {
-    return bookmarkedVocaList;
+  public VocaHandler getVocaHandler() {
+    return vocaHandler;
   }
 
-  public void setBookmarkedVocaList(List<Vocabulary> bookmarkedVocaList) {
-    this.bookmarkedVocaList = bookmarkedVocaList;
+  public void setVocaHandler(VocaHandler vocaHandler) {
+    this.vocaHandler = vocaHandler;
   }
 
   public void addVoca() {
-    System.out.println("단어추가");
-    Vocabulary voca = new Vocabulary();
-    voca.setWord(Prompt.inputString("단어? "));
-    voca.setMeaning(Prompt.inputString("뜻? "));
-    voca.setExSentence(Prompt.inputString("예제? "));
-    voca.setLevel(Prompt.inputInt("레벨? "));
-    voca.setPart(Vocabulary.stringToPart(Prompt.inputString("품사? ")));
-
-
-    vocaList.add(voca);
+    vocaHandler.add();
   }
-
+  
   public void listVoca() {
-    System.out.println("단어목록");
-    for(Vocabulary voca : vocaList) {
-      System.out.printf("단어 : %s, 뜻 : %s, 품사 : %s, 예제 : %s, 레벨 : %s\n",
-          voca.getWord(),
-          voca.getMeaning(),
-          Vocabulary.partToString(voca.getPart()),
-          voca.getExSentence(),
-          voca.getLevel());
-    }
+    vocaHandler.list();
   }
-
-  public Vocabulary findByWord(String word) {
-    for (Vocabulary voca : vocaList) {
-      if (word.equals(voca.getWord())) {
-        return voca;
-      }
-    }
-    return null;
-  }
-
+  
   public void updateVoca() {
-    System.out.println("단어수정");
-      Vocabulary voca = findByWord(Prompt.inputString("단어?"));
-  if (voca == null) {
-    /**
-     voca.setWord(Prompt.inputString(String.format("단어(%s)?")));
-     voca.setMeaning(Prompt.inputString(String.format("뜻(%s)?")));
-     voca.setExSentence(Prompt.inputString(String.format("예제(%s)?")));
-    voca.setLevel(Prompt.inputString(String.format("레벨(%s)?")));
-**/
+    vocaHandler.update();
   }
-  }
-
+  
   public void deleteVoca() {
-    System.out.println("단어삭제");
+    vocaHandler.delete();
   }
 
   public void quiz() {
@@ -106,6 +85,10 @@ public class Member {
   }
 
   public void bookmarkVoca() {
-    System.out.println("북마크");
+    vocaHandler.bookmark();
+  }
+  
+  public void cancelBookmarkVoca() {
+    vocaHandler.cancelBookmark();
   }
 }

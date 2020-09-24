@@ -1,4 +1,4 @@
-﻿# 📚 vocabulary-list ✍
+# 📚 vocabulary-list ✍
 
 - 팀원: 박민섭, 최희진, 김하연
 - 목적: 마틴 파울러의 리팩토링 책을 읽으면서 배운 기법을 미니 프로젝트에 적용하고 실습한다.
@@ -86,3 +86,33 @@ update()
 
 * Member클래스에서 하는 일이 너무 많아지고 있어서 기능분리의 필요성을 깨달았다.
 * 스태틱 메서드와 인스턴스 메서드를 어떤 때에 선언해야 하는지 어려움을 느꼈다.
+
+
+
+___
+
+### 2020-09-24
+
+#### 변경 사항
+
+- VocaHandler 클래스 정의
+  - add(), list() : Member에 있던 addVoca(), addVoca() 이동
+  - add() 메서드 수정 : 무효한 품사 입력할 경우, 다시 입력받기
+  - update(), delete(), bookmark(), cancelBookmark() 추가
+- Member 클래스
+  - bookmarkList 필드 삭제
+  - setVocaList() 메서드 몸체에서 setVocaHandler() 호출
+  - 기본 단어 리스트 추가
+- Vocanulary 클래스
+  - isMemorized -> bookmark 이름 변경
+
+#### 개선점
+
+- 단어조회할 때 조회되는 단어 가독성 높이기
+- 파일 입출력 기능 구현
+- 퀴즈 메서드 실감나는 서비스 구현(스레드 슬립, 아스키아트 등등)
+- MemberHandler 에서 list() update() delete() 메서드 구현
+
+#### 느낀점
+
+- 프로그램이 무미건조한 CRUD 서비스의 상태에 머물러있다. 좀더 화려하고 역동적으로 꾸며볼 필요가 있다.

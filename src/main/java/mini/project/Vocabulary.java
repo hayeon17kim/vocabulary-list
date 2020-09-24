@@ -5,7 +5,7 @@ public class Vocabulary {
   private String meaning;
   private String exSentence;
   private int level;
-  private boolean isMemorized;
+  private boolean bookmark;
   private int part;
 
   public static final int VERB = 1;
@@ -62,12 +62,12 @@ public class Vocabulary {
     this.level = level;
   }
 
-  public boolean isMemorized() {
-    return isMemorized;
+  public boolean getBookmark() {
+    return bookmark;
   }
 
-  public void setMemorized(boolean isMemorized) {
-    this.isMemorized = isMemorized;
+  public void setBookmark(boolean bookmark) {
+    this.bookmark = bookmark;
   }
 
   public static int stringToPart(String inputString) {
