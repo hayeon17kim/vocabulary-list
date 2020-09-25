@@ -34,17 +34,23 @@ public class VocaHandler {
 
   public void list() {
     System.out.println("단어목록");
-    for(Vocabulary voca : list) {
-      System.out.printf("단어 : %s, 뜻 : %s, 품사 : %s, 예제 : %s, 레벨 : %s\n",
-          voca.getWord(),
-          voca.getMeaning(),
-          Vocabulary.partToString(voca.getPart()),
-          voca.getExSentence(),
-          voca.getLevel());
+    for (int i = 0; i < list.size(); i++) {
+      Vocabulary voca = list.get(i);
+      System.out.println("==============================================");
+      System.out.printf("   %-40s***\n", voca.getWord());
+      System.out.println("==============================================");
+      System.out.printf("   뜻     : %s\n", voca.getMeaning());
+      if (voca.getPart() != 0)
+        System.out.printf("   품사   : %s\n", voca.getPart()); 
+      if (voca.getLevel() != 0)
+        System.out.printf("   난이도 : %s\n", voca.getLevel());
+      if (voca.getExSentence() != null)
+        System.out.printf("   <예문>\n%s\n", voca.getExSentence());
+      System.out.println("==============================================");
     }
-
   }
 
+  
   public void update() {
     System.out.println("단어수정");
     Vocabulary voca = findByWord(Prompt.inputString("단어?"));
@@ -109,4 +115,63 @@ public class VocaHandler {
     voca.setBookmark(false);
     
   }
+
+  public void quiz() {
+    //Random random = new Random();
+
+    // 단어를 랜덤순서로 제시하고 싶다면
+    // Randeom.nextInt(단어리스트 개수)(0~단어리스트 개수 -1) + 중복을 잡아내는 코드
+    // 다음 뜻에 맞는 단어를 입력하세요.
+    // 1. 시험 : ___
+    // 맞았습니다!
+    // 2. 단어 : ___
+    // 틀렸습니다! 해당 단어는 북마크 됩니다.
+    // 3. 강아지 : ___
+    // 맞았습니다!
+    // 시험이 완료되었습니다.
+    // 20 문제 중 14개 단어를 맞추었습니다!
+    
+  }
 }
+
+
+/*
+
+
+0) 한줄로 출력 => 예제 때문에 안될듯...
+
+
+1) 단어/뜻/품사/레벨 한줄, 예제 한줄
+==============================================
+|   word   |     단어   |   명사   |  Level.3  |
+|   This word is good!                       |
+==============================================
+|   cake   |케이이이이크|   명사   |  Level.4  |
+|   I want to eat cake...                    |
+==============================================
+
+2) 따로따로 => 그럼 많은 단어를 출력할 수 없다. 5개씩 보여줘야 할 듯
+==============================================
+  word
+==============================================  
+  뜻     : 단어
+  품사   : 명사
+  난이도 : Level.3
+  <예문>
+  This word is good!
+=============================================
+  cake
+  케이크
+  명사
+  Level.4
+=============================================
+
+
+ */
+
+
+
+
+
+
+

@@ -13,9 +13,6 @@ public class Vocabulary {
   public static final int ADVERB = 3;
   public static final int ADJECTIVE = 4;
 
-  public Vocabulary() {
-
-  }
 
   public int getPart() {
     return part;
@@ -25,9 +22,21 @@ public class Vocabulary {
     this.part = part;
   }
 
+  public Vocabulary() {}
+
+  public Vocabulary(String word) {
+    this.word = word;
+  }
+
   public Vocabulary(String word, String meaning) {
     this.word = word;
     this.meaning = meaning;
+  }
+
+  public Vocabulary(String word, String meaning, String exSentence) {
+    this.word = word;
+    this.meaning = meaning;
+    this.exSentence = exSentence;
   }
 
   public String getWord() {

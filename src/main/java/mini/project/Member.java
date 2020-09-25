@@ -9,16 +9,22 @@ public class Member {
   private String id;
   private String password;
 
+public Member() {
+  this.name = "유관순";
+  this.id = "admin";
+  this.password = "1234";
+}
+
   List<Vocabulary> vocaList = new ArrayList<Vocabulary>();
   
   {
-    vocaList.add(new Vocabulary("python", "파이썬"));
-    vocaList.add(new Vocabulary("javascript", "자바스크립트"));
-    vocaList.add(new Vocabulary("java", "자바"));
-    vocaList.add(new Vocabulary("kotlin", "코틀린"));
-    vocaList.add(new Vocabulary("go", "고"));
-    vocaList.add(new Vocabulary("Ruby", "루비"));
-    vocaList.add(new Vocabulary("c", "씨"));
+    vocaList.add(new Vocabulary("python", "파이썬", "python is love"));
+    vocaList.add(new Vocabulary("javascript", "자바스크립트", "javaScript is not java"));
+    vocaList.add(new Vocabulary("java", "자바", "we love java"));
+    vocaList.add(new Vocabulary("kotlin", "코틀린", "kotlin is java's neighborhood"));
+    vocaList.add(new Vocabulary("go", "고", "Let's go!"));
+    vocaList.add(new Vocabulary("Ruby", "루비", "I want Ruby"));
+    vocaList.add(new Vocabulary("c", "씨", "C is old languege"));
   }
   
   VocaHandler vocaHandler = new VocaHandler(vocaList);
@@ -82,6 +88,7 @@ public class Member {
 
   public void quiz() {
     System.out.println("퀴즈");
+    vocaHandler.quiz();
   }
 
   public void bookmarkVoca() {
