@@ -144,3 +144,31 @@ ___
 
 - VocaHandler.list() 메서드에서 북마크된 단어를 어떻게 출력할 지 정해야 한다. 
 - Member.quiz() 메서드 구현 필요
+
+___
+
+### 2020-09-26
+
+#### 변경사항
+
+- Members.json 파일 수정
+
+#### 추가한 코드
+
+- VocaHandler의 quiz 메서드 구현
+- 각 회원이 갖는 단어장을 여러개 관리할 수 있도록 단어장 HashMap을 생성
+
+#### 느낀점
+
+- Random 클래스를 처음 사용해봤는데, 생각보다 편리했다.
+- vocaHandler에 대한 캡슐화의 필요성을 느꼈다.
+- 단어장 리스트를 관리할 때, HashMap을 적용한 것은 적절했던 것 같다.다만, HashMap에 익숙해질 필요가 있음을 느꼈다.
+
+#### 개선점
+
+- 여러개의 단어장에 대한 VocaHandler 객체 관리 방식에 대한 아이디어
+  - 메서드에서 필요할 때마다 로컬 변수로 그때 그때 생성
+  - ArrayList를 상속받는 새로운 클래스 vocaList를 정의하고, VocaHandler가 갖고 있는 기능을 재사용한다.
+    - VocaHandler를 패키지 멤버 클래스로 두는 방법
+    - VocaHandler를 vocaList의 이너 클래스로 두는 방법
+

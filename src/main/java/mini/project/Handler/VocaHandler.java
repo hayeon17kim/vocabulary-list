@@ -1,6 +1,7 @@
 package mini.project.Handler;
 
 import java.util.List;
+import java.util.Random;
 import mini.project.Prompt;
 import mini.project.Vocabulary;
 
@@ -117,20 +118,42 @@ public class VocaHandler {
   }
 
   public void quiz() {
-    //Random random = new Random();
+    Random random = new Random();
+    boolean[] order = new boolean[list.size()];
+    int correct= 0;
 
-    // 단어를 랜덤순서로 제시하고 싶다면
-    // Randeom.nextInt(단어리스트 개수)(0~단어리스트 개수 -1) + 중복을 잡아내는 코드
-    // 다음 뜻에 맞는 단어를 입력하세요.
-    // 1. 시험 : ___
-    // 맞았습니다!
-    // 2. 단어 : ___
-    // 틀렸습니다! 해당 단어는 북마크 됩니다.
-    // 3. 강아지 : ___
-    // 맞았습니다!
-    // 시험이 완료되었습니다.
-    // 20 문제 중 14개 단어를 맞추었습니다!
+    int testTimes;
+    do {
+      testTimes = Prompt.inputInt(String.format("몇 문제를 푸시겠습니까?(최대 %d) ", list.size()));
+      if (testTimes > list.size())
+        System.out.printf("최대 %d개의 문제만 풀 수 있습니다.", list.size());
+    } while (testTimes > list.size());
     
+    for (int i = 0; i < testTimes; i++) {
+      int x;
+      while(true) {
+        x = random.nextInt(list.size());
+        if (!order[x]) {
+          order[x] = true;
+          break;
+          }
+      }
+        
+      Vocabulary voca = list.get(x);
+      System.out.println("다음 뜻에 맞는 단어를 입력하세요.");
+      String response = Prompt.inputString(String.format("%d. %s : ", i + 1, voca.getMeaning()));
+      
+      if (response.equalsIgnoreCase(voca.getWord())) {
+        System.out.println("맞았습니다!");
+        correct++;
+      }
+      else {
+        System.out.println("틀렸습니다! 해당 단어는 북마크 됩니다.");
+        voca.setBookmark(true);
+      }
+    }
+    System.out.println("시험이 완료되었습니다.");
+    System.out.printf("%d 문제 중 %d개 단어를 맞추었습니다!\n", testTimes, correct);
   }
 }
 
