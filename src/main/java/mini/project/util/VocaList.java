@@ -3,18 +3,56 @@ package mini.project.util;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import mini.project.domain.Vocabulary;
 
 
-public class VocaList<Vocabulary> extends ArrayList<Vocabulary> {
+public class VocaList<T> extends ArrayList<T> {
+  private static final long serialVersionUID = 1L;
 
-  public class VocaHandler {
+    Handler vocaHandler = new Handler(this);
 
-    List<Vocabulary> list;
+    public void addVoca() {
+        vocaHandler.add();
+    }
 
-    public VocaHandler(List<Vocabulary> list) {
+    public void listVoca() {
+        vocaHandler.list();
+    }
+
+    public void updateVoca() {
+      vocaHandler.update();
+    }
+
+    public void deleteVoca() {
+      vocaHandler.delete();
+    }
+
+    public void bookmarkVoca() {
+      vocaHandler.bookmark();
+    }
+
+    public void cancleBookmarkVoca() {
+      vocaHandler.cancelBookmark();
+    }
+
+    public void quiz() {
+      vocaHandler.quiz();
+    }
+
+
+  public class Handler {
+
+
+    List<T> list;
+
+    public Handler(List<T> list) {
       this.list = list;
     }
 
+    public Handler() {
+    }
+
+    @SuppressWarnings("unchecked")
     public void add() {
       System.out.println("단어추가");
       Vocabulary voca = new Vocabulary();
@@ -33,13 +71,13 @@ public class VocaList<Vocabulary> extends ArrayList<Vocabulary> {
 
       voca.setPart(part);
 
-      list.add(voca);
+      list.add((T) voca);
     }
 
     public void list() {
       System.out.println("단어목록");
       for (int i = 0; i < list.size(); i++) {
-        Vocabulary voca = list.get(i);
+        Vocabulary voca = (Vocabulary) list.get(i);
         System.out.println("==============================================");
         System.out.printf("   %-40s***\n", voca.getWord());
         System.out.println("==============================================");
@@ -88,9 +126,9 @@ public class VocaList<Vocabulary> extends ArrayList<Vocabulary> {
     }
 
     public Vocabulary findByWord(String word) {
-      for (Vocabulary voca : list) {
-        if (word.equals(voca.getWord())) {
-          return voca;
+      for (T voca : list) {
+        if (word.equals(((Vocabulary) voca).getWord())) {
+          return (Vocabulary) voca;
         }
       }
       return null;
@@ -142,7 +180,7 @@ public class VocaList<Vocabulary> extends ArrayList<Vocabulary> {
           }
         }
 
-        Vocabulary voca = list.get(x);
+        Vocabulary voca = (Vocabulary) list.get(x);
         System.out.println("다음 뜻에 맞는 단어를 입력하세요.");
         String response = Prompt.inputString(String.format("%d. %s : ", i + 1, voca.getMeaning()));
 
