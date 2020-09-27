@@ -4,6 +4,15 @@
 - 목적: 마틴 파울러의 리팩토링 책을 읽으면서 배운 기법을 미니 프로젝트에 적용하고 실습한다.
 - 주제: 단어장 프로그램
 
+## 일지
+- [1일차 (2020-09-22)](https://github.com/hayeon17kim/vocabulary-list#2020-09-22)
+- [2일차 (2020-09-23)](https://github.com/hayeon17kim/vocabulary-list#2020-09-23)
+- [3일차 (2020-09-24)](https://github.com/hayeon17kim/vocabulary-list#2020-09-24)
+- [4일차 (2020-09-25)](https://github.com/hayeon17kim/vocabulary-list#2020-09-25)
+- [5일차 (2020-09-26)](https://github.com/hayeon17kim/vocabulary-list#2020-09-26)
+- [6일차 (2020-09-27)](https://github.com/hayeon17kim/vocabulary-list#2020-09-27)
+
+
 
 ### 2020-09-22
 #### 필요 기능 논의
