@@ -1,4 +1,4 @@
-package mini.project;
+package mini.project.util;
 
 import java.sql.Date;
 import java.util.Scanner;

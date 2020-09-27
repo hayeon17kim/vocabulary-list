@@ -1,4 +1,4 @@
-package mini.project;
+package mini.project.domain;
 
 public class Vocabulary {
   private String word;

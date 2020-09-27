@@ -2,9 +2,9 @@ package mini.project.Handler;
 
 import java.util.ArrayList;
 import java.util.List;
-import mini.project.Member;
-import mini.project.Prompt;
-import mini.project.Vocabulary;
+import mini.project.domain.Member;
+import mini.project.domain.Vocabulary;
+import mini.project.util.Prompt;
 
 public class MemberHandler {
 

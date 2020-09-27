@@ -1,4 +1,4 @@
-package mini.project;
+package mini.project.domain;
 
 import java.util.HashMap;
 import java.util.List;

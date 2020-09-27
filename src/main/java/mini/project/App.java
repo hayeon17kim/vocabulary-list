@@ -12,6 +12,8 @@ import java.util.Collection;
 import java.util.List;
 import com.google.gson.Gson;
 import mini.project.Handler.MemberHandler;
+import mini.project.domain.Member;
+import mini.project.util.Prompt;
 
 public class App {
   static List<Member> memberList = new ArrayList<Member>();
@@ -75,7 +77,7 @@ public class App {
       Prompt.close();
       saveObjects(memberList, memberFile);
     }
-  
+
   private static <T> void saveObjects(Collection<T> list, File file) {
     BufferedWriter out = null;
     try {
