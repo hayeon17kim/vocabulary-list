@@ -4,7 +4,6 @@
 - 목적: 마틴 파울러의 리팩토링 책을 읽으면서 배운 기법을 미니 프로젝트에 적용하고 실습한다.
 - 주제: 단어장 프로그램
 
-## 일지
 
 ### 2020-09-22
 #### 필요 기능 논의
@@ -177,4 +176,33 @@ ___
 ### 2020-09-27
 
 #### 변경사항
+- 패키지 정리
+  - **util**: Prompt, VocaList
+  - **handler**: VocaHandler, MemberHandler
+  - **domain**: Member, Vocabulary
 
+#### 추가한 코드
+- VocaList
+  - ArrayList를 상속받는 `VocaList<T>` 클래스를 정의하였다.
+  - Serializable 인터페이스를 구현하도록 하고, serialVersionUID를 1L로 설정하였다. 
+  - 기존의 VocaHandler를 VocaList의 inner class로 정의하였다.
+  - VocaHandler vocaHandler 필드를 정의하였다.
+  - addVoca(), listVoca(), updateVoca(), deleteVoca(), bookmarkVoca(), cancleBookmarkVoca(), quiz()를 추가하였다.
+    - 각 메서드 내부에서 vocaHandler의 메서드를 호출하도록 정의하였다.
+
+- Member
+  - Serializable 인터페이스를 구현하도록 하고, serialVersionUID를 1L로 설정하였다. 
+- Member
+  - createVocaList()
+  - findVocaList()
+
+
+#### 느낀점
+
+- 현재 VocaList를 ArrayList를 상속받도록 해서 제네릭 타입을 선언해야 하는데, 사실 지금의 VocaList는 Vocabulary 객체만을 다루고 있어서 의미가 없다. 따라서 다음과 같은 방법을 생각해 보았다.
+  - `VocaList <T extends Vocabulary>`로 제네릭 타입 선언
+  - `Vocabulary` 객체의 메서드를 사용할 때마다 형변환
+  - `VocaList extends ArrayList<Vocabulary>`
+
+- VocaList 클래스 선언부에 도메인 클래스인 Vocabulary를 타입 파라미터로 선언하고, 클래스 내부에서 Vobulary 객체를 생성하려고 시도하였다. 그러나 컴파일러는 이 Vocabulary를 단순한 타입 파라미터명으로 인식하였기 때문에, 타입 파라미터로 인스턴스를 생성하는 코드에서 `cannot instantiate` 오류가 발생하였다.
+- List의 iterator() 메서드가 Iterator 객체를 리턴하는 것처럼, 객체를 외부에서 리턴받아서 직접 사용하는 방식이 있었고, VocaList에서만 VocaHandler를 사용하는 방법이 있었는데, 우리는 후자의 방법을 선택해서 VocaHandler에 있는 모든 메서드에 대응되는 메서드를 VocaList에 정의해줬다. 그리고 외부에서 이 VocaList의 새 메서드를 가지고 호출하면 VocaHandler가 내부적으로 사용되도록 하였다. 
