@@ -4,6 +4,8 @@
 - 목적: 마틴 파울러의 리팩토링 책을 읽으면서 배운 기법을 미니 프로젝트에 적용하고 실습한다.
 - 주제: 단어장 프로그램
 
+---
+
 ## 일지
 - [1일차 (2020-09-22)](https://github.com/hayeon17kim/vocabulary-list#2020-09-22)
 - [2일차 (2020-09-23)](https://github.com/hayeon17kim/vocabulary-list#2020-09-23)
@@ -11,10 +13,12 @@
 - [4일차 (2020-09-25)](https://github.com/hayeon17kim/vocabulary-list#2020-09-25)
 - [5일차 (2020-09-26)](https://github.com/hayeon17kim/vocabulary-list#2020-09-26)
 - [6일차 (2020-09-27)](https://github.com/hayeon17kim/vocabulary-list#2020-09-27)
+- [7일차 (2020-09-28)](https://github.com/hayeon17kim/vocabulary-list#2020-09-28)
 
-
+------
 
 ### 2020-09-22
+
 #### 필요 기능 논의
   - 리스트에 있는 단어 모두 띄우는 기능 
 	- 시험 보기 기능 
@@ -211,7 +215,33 @@ ___
 - 현재 VocaList를 ArrayList를 상속받도록 해서 제네릭 타입을 선언해야 하는데, 사실 지금의 VocaList는 Vocabulary 객체만을 다루고 있어서 의미가 없다. 따라서 다음과 같은 방법을 생각해 보았다.
   - `VocaList <T extends Vocabulary>`로 제네릭 타입 선언
   - `Vocabulary` 객체의 메서드를 사용할 때마다 형변환
-  - `VocaList extends ArrayList<Vocabulary>`
-
-- VocaList 클래스 선언부에 도메인 클래스인 Vocabulary를 타입 파라미터로 선언하고, 클래스 내부에서 Vobulary 객체를 생성하려고 시도하였다. 그러나 컴파일러는 이 Vocabulary를 단순한 타입 파라미터명으로 인식하였기 때문에, 타입 파라미터로 인스턴스를 생성하는 코드에서 `cannot instantiate` 오류가 발생하였다.
+  - `VocaList extends ArrayList<Vocabulary>`  :white_check_mark:
+- VocaList 클래스 선언부에 도메인 클래스인 Vocabulary를 타입 파라미터로 선언하고, 클래스 내부에서 Vobulary 객체를 생성하려고 시도하였다. 그러나 컴파일러는 이 Vocabulary를 단순한 타입 파라미터명으로 인식하였기 때문에, 타입 파라미터로 인스턴스를 생성하는 코드에서 `cannot instantiate`  컴파일 오류가 발생하였다.
 - List의 iterator() 메서드가 Iterator 객체를 리턴하는 것처럼, 객체를 외부에서 리턴받아서 직접 사용하는 방식이 있었고, VocaList에서만 VocaHandler를 사용하는 방법이 있었는데, 우리는 후자의 방법을 선택해서 VocaHandler에 있는 모든 메서드에 대응되는 메서드를 VocaList에 정의해줬다. 그리고 외부에서 이 VocaList의 새 메서드를 가지고 호출하면 VocaHandler가 내부적으로 사용되도록 하였다. 
+
+---
+
+### 2020-09-28
+
+#### 변경사항
+
+- VocaList 클래스의 타입 파라미터 삭제 
+  - `VocaList extends ArrayList<Vocabulary>`로 변경
+- Member에서 VocaHandler의 메서드를 호출하던 것을 VocaList의 메서드를 호출하도록 변경
+
+#### 추가한 코드
+
+- 현재 선택한 단어장 객체를 담는 currentVocaList라는 필드를 추가하였다.
+- VocaList에 대한 CRUD 메서드를 추가하였다.
+- currentVocaList가 지정되어 있는 상태와 지정되어 있지 않은 상태를 분리하도록 boolean 타입의 isEmpty 로컬 변수를 main 메서드에 만들어 주었다.
+
+#### 개선점
+
+- main 메서드의 반복문과 switch 문을 메서드로 추출할 필요가 있다.
+- 커맨드 디자인 패턴을 적용하여 App의 메인 메서드에서 호출하고 있는 메서드를 클래스로 분리해야 한다.
+- VocaHandler를 Vocabulary의 중첩 클래스로 만들어준 것처럼 MemberHandler도 Member의 중첩클래스로 정의할 필요가 있다.
+
+#### 느낀점
+- VocaHandler를 VocaList에 넣는 작업을 완수해서 뿌듯하다. 이로 인해 코드가 한층 깔끔해 진 것 같다.
+- 메서드가 너무 많아서 어떤 메서드가 있는지 잘 파악하지 못하고 있다. 메서드를 정리할 필요가 있다.
+

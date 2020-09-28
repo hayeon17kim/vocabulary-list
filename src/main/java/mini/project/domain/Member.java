@@ -14,13 +14,15 @@ public class Member implements Serializable {
   private String name;
   private String id;
   private String password;
+  
+  private VocaList currentVocaList;
 
   public Member() {
     this.name = "유관순";
     this.id = "admin";
     this.password = "1234";
   }
-  HashMap<String, VocaList<Vocabulary> vocaListMap = new HashMap<String, VocaList<Vocabulary>();
+  HashMap<String, VocaList> vocaListMap = new HashMap<String, VocaList>();
 
 
   //  {
@@ -57,61 +59,61 @@ public class Member implements Serializable {
     this.password = password;
   }
 
-  public void createVocaList() {
-    vocaListMap.put(Prompt.inputString("단어장 이름"), new VocaList<Vocabulary>());
+
+  public VocaList findVocaList() {
+    return vocaListMap.get(Prompt.inputString("단어장 이름 : "));
   }
 
-  public VocaList<Vocabulary> findVocaList() {
-    return vocaListMap.get(Prompt.inputString("단어장 이름"));
+  
+  public VocaList getCurrentVocaList() { 
+    return currentVocaList;
 
   }
-
-  public List<Vocabulary> getVocaList() {
-    return vocaList;
-  }
-
-  public void setVocaList(List<Vocabulary> vocaList) {
-    this.vocaList = vocaList;
-    setVocaHandler(new VocaHandler(this.vocaList));
-  }
-
-  public VocaHandler getVocaHandler() {
-    return vocaHandler;
-  }
-
-  public void setVocaHandler(VocaHandler vocaHandler) {
-    this.vocaHandler = vocaHandler;
+    
+  public void setCurrentVocaList() {
+    this.currentVocaList = findVocaList();
   }
 
   public void addVoca() {
-    vocaHandler.add();
+    currentVocaList.addVoca();
   }
 
   public void listVoca() {
-    vocaHandler.list();
+    currentVocaList.listVoca();
   }
 
   public void updateVoca() {
-    vocaHandler.update();
+    currentVocaList.updateVoca();
   }
 
   public void deleteVoca() {
-    vocaHandler.delete();
+    currentVocaList.deleteVoca();
   }
 
   public void quiz() {
-    List<Vocabulary> vocaList = vocaListMap.get("단어장1");
-    vocaList.quiz();
-    VocaHandler vocaHandler = new VocaHandler(vocaList);
     System.out.println("퀴즈");
-    vocaHandler.quiz();
+    currentVocaList.quiz();
   }
 
   public void bookmarkVoca() {
-    vocaHandler.bookmark();
+    findVocaList().bookmarkVoca();
   }
 
   public void cancelBookmarkVoca() {
-    vocaHandler.cancelBookmark();
+    currentVocaList.cancleBookmarkVoca();
+  }
+
+  
+  public void listVocaList() {
+    for (String key : vocaListMap.keySet())
+      System.out.println(vocaListMap.get(key));
+  }
+
+  public void addVocaList() {
+    vocaListMap.put(Prompt.inputString("단어장 이름 : "), new VocaList());
+  }
+
+  public void deleteVocaList() {
+   vocaListMap.remove(Prompt.inputString("단어장 이름 : "));
   }
 }

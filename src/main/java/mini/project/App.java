@@ -11,9 +11,9 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import com.google.gson.Gson;
-import mini.project.Handler.MemberHandler;
 import mini.project.domain.Member;
 import mini.project.util.Prompt;
+import mini.project.util.handler.MemberHandler;
 
 public class App {
   static List<Member> memberList = new ArrayList<Member>();
@@ -24,6 +24,7 @@ public class App {
   public static void main(String[] args) {
     loadObjects(memberList, memberFile, Member[].class);
     memberList.add(new Member());
+    boolean isEmpty = true;
 
     loop:
       while (true) {
@@ -45,7 +46,17 @@ public class App {
           }
 
         } else {
-          switch (Prompt.inputString("명령> ")) {
+          loggedInMember.listVocaList();
+          while(true) {
+            
+            switch (Prompt.inputString("명령> ")) {
+              case "단어장추가":
+                loggedInMember.addVocaList();
+                break;
+              case "단어장선택":
+                loggedInMember.setCurrentVocaList();
+                
+                switch (Prompt.inputString("명령> ")) {
             case "퀴즈":
               loggedInMember.quiz();
               break;
@@ -69,9 +80,28 @@ public class App {
             case "로그아웃":
               loggedInMember = null;
               break;
+            case "단어장변경":
+              isEmpty = true;
+              break;
             default:
               System.out.println("유효하지 않은 명령어!");
           }
+                break;
+              case "단어장삭제":
+                loggedInMember.deleteVocaList();
+                break;
+
+                
+            }
+          }
+          
+          
+          if (isEmpty) {
+            loggedInMember.setCurrentVocaList();
+            isEmpty = false;
+          }
+            
+          
         }
       }
       Prompt.close();

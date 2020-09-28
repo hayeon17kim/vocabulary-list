@@ -1,4 +1,4 @@
-package mini.project.Handler;
+package mini.project.util.handler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +47,7 @@ public class MemberHandler {
     for (Member member : memberList) {
       System.out.printf("%s, %s\n", member.getName(), member.getId());
       System.out.println("[단어목록]");
-      for (Vocabulary voca : member.getVocaList()) {
+      for (Vocabulary voca : member.getCurrentVocaList()) {
         System.out.printf("%s, %s\n", voca.getWord(), voca.getMeaning());
       }
       System.out.println();

@@ -1,12 +1,11 @@
 package mini.project.util;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 import mini.project.domain.Vocabulary;
 
 
-public class VocaList<T> extends ArrayList<T> {
+public class VocaList extends ArrayList<Vocabulary> {
   private static final long serialVersionUID = 1L;
 
     Handler vocaHandler = new Handler(this);
@@ -43,16 +42,12 @@ public class VocaList<T> extends ArrayList<T> {
   public class Handler {
 
 
-    List<T> list;
+    VocaList list;
 
-    public Handler(List<T> list) {
+    public Handler(VocaList list) {
       this.list = list;
     }
 
-    public Handler() {
-    }
-
-    @SuppressWarnings("unchecked")
     public void add() {
       System.out.println("단어추가");
       Vocabulary voca = new Vocabulary();
@@ -71,7 +66,7 @@ public class VocaList<T> extends ArrayList<T> {
 
       voca.setPart(part);
 
-      list.add((T) voca);
+      list.add(voca);
     }
 
     public void list() {
@@ -126,7 +121,7 @@ public class VocaList<T> extends ArrayList<T> {
     }
 
     public Vocabulary findByWord(String word) {
-      for (T voca : list) {
+      for (Vocabulary voca : list) {
         if (word.equals(((Vocabulary) voca).getWord())) {
           return (Vocabulary) voca;
         }
