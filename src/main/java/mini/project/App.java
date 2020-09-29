@@ -84,6 +84,7 @@ public class App {
                       loggedInMember = null;
                       break loggedInLoop;
                     case "단어장나가기":
+                      loggedInMember.setCurrentVocaList()
                       isEmpty = true;
                       break;
                     case "종료":
