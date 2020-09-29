@@ -2,7 +2,6 @@ package mini.project.domain;
 
 import java.io.Serializable;
 import java.util.HashMap;
-import java.util.List;
 import mini.project.util.Prompt;
 import mini.project.util.VocaList;
 
@@ -23,18 +22,7 @@ public class Member implements Serializable {
     this.password = "1234";
   }
   HashMap<String, VocaList> vocaListMap = new HashMap<String, VocaList>();
-
-
-  //  {
-  //    vocaList.add(new Vocabulary("python", "파이썬", "python is love"));
-  //    vocaList.add(new Vocabulary("javascript", "자바스크립트", "javaScript is not java"));
-  //    vocaList.add(new Vocabulary("java", "자바", "we love java"));
-  //    vocaList.add(new Vocabulary("kotlin", "코틀린", "kotlin is java's neighborhood"));
-  //    vocaList.add(new Vocabulary("go", "고", "Let's go!"));
-  //    vocaList.add(new Vocabulary("ruby", "루비", "I want Ruby"));
-  //    vocaList.add(new Vocabulary("c", "씨", "C is old languege"));
-  //  }
-
+ 
   public String getName() {
     return name;
   }
@@ -105,15 +93,19 @@ public class Member implements Serializable {
 
   
   public void listVocaList() {
+    System.out.println("[단어장 목록]");
     for (String key : vocaListMap.keySet())
-      System.out.println(vocaListMap.get(key));
+      System.out.println(vocaListMap.get(key).getTitle());
   }
 
   public void addVocaList() {
-    vocaListMap.put(Prompt.inputString("단어장 이름 : "), new VocaList());
+    System.out.println("[단어장 추가]");
+    String title = Prompt.inputString("단어장 이름 : ");
+    vocaListMap.put(title, new VocaList(title));
   }
 
   public void deleteVocaList() {
+    System.out.println("[단어장 삭제]");
    vocaListMap.remove(Prompt.inputString("단어장 이름 : "));
   }
 }

@@ -26,9 +26,10 @@ public class App {
     memberList.add(new Member());
     boolean isEmpty = true;
 
-    loop:
+    mainLoop:
       while (true) {
         if (loggedInMember == null) {
+          System.out.println("[안녕하세요, 로그인이나 회원가입을 해주세요!]");
           switch (Prompt.inputString("명령> ")) {
             case "로그인":
               loggedInMember = memberHandler.logIn();
@@ -40,73 +41,75 @@ public class App {
               memberHandler.manage();
               break;
             case "종료":
-              break loop;
+              break mainLoop;
             default:
               System.out.println("유효하지 않은 명령어!");
           }
 
         } else {
-          loggedInMember.listVocaList();
-          while(true) {
-            
+          loggedInLoop: while (loggedInMember != null) {
+            System.out.printf("[%s님의 단어장을 추가하거나 선택해주세요!]\n", loggedInMember.getName());
+            loggedInMember.listVocaList();
             switch (Prompt.inputString("명령> ")) {
               case "단어장추가":
                 loggedInMember.addVocaList();
                 break;
               case "단어장선택":
                 loggedInMember.setCurrentVocaList();
-                
-                switch (Prompt.inputString("명령> ")) {
-            case "퀴즈":
-              loggedInMember.quiz();
-              break;
-            case "단어추가":
-              loggedInMember.addVoca();
-              break;
-            case "단어삭제":
-              loggedInMember.deleteVoca();
-              break;
-            case "단어수정":
-              loggedInMember.updateVoca();
-              break;
-            case "단어목록":
-              loggedInMember.listVoca();
-              break;
-            case "북마크하기":
-              loggedInMember.bookmarkVoca();
-              break;
-            case "북마크취소":
-              loggedInMember.cancelBookmarkVoca();
-            case "로그아웃":
-              loggedInMember = null;
-              break;
-            case "단어장변경":
-              isEmpty = true;
-              break;
-            default:
-              System.out.println("유효하지 않은 명령어!");
-          }
+                isEmpty = false;
+                vocaListLoop : while (!isEmpty) {
+                  System.out.printf("[%s]\n", loggedInMember.getCurrentVocaList().getTitle());
+                  switch (Prompt.inputString("명령> ")) {
+                    case "퀴즈":
+                      loggedInMember.quiz();
+                      break;
+                    case "단어추가":
+                      loggedInMember.addVoca();
+                      break;
+                    case "단어삭제":
+                      loggedInMember.deleteVoca();
+                      break;
+                    case "단어수정":
+                      loggedInMember.updateVoca();
+                      break;
+                    case "단어목록":
+                      loggedInMember.listVoca();
+                      break;
+                    case "북마크하기":
+                      loggedInMember.bookmarkVoca();
+                      break;
+                    case "북마크취소":
+                      loggedInMember.cancelBookmarkVoca();
+                    case "로그아웃":
+                      loggedInMember = null;
+                      break loggedInLoop;
+                    case "단어장나가기":
+                      isEmpty = true;
+                      break;
+                    case "종료":
+                      break mainLoop;
+                    default:
+                      System.out.println("유효하지 않은 명령어!");
+                  }
+                }
                 break;
               case "단어장삭제":
                 loggedInMember.deleteVocaList();
                 break;
-
-                
+              case "로그아웃":
+                loggedInMember = null;
+                break loggedInLoop;
+              case "종료":
+                break mainLoop;
+              default:
+                System.out.println("유효하지 않은 명령어!");
             }
           }
-          
-          
-          if (isEmpty) {
-            loggedInMember.setCurrentVocaList();
-            isEmpty = false;
-          }
-            
-          
         }
       }
-      Prompt.close();
-      saveObjects(memberList, memberFile);
-    }
+    Prompt.close();
+    saveObjects(memberList, memberFile);
+  }
 
   private static <T> void saveObjects(Collection<T> list, File file) {
     BufferedWriter out = null;
@@ -135,7 +138,7 @@ public class App {
   private static <T> void loadObjects(Collection<T> list, // 객체를 담을 컬렉션
       File file, // JSON 문자열이 저장된 파일
       Class<T[]> clazz // JSON 문자열을 어떤 타입의 배열로 만들 것인지 알려 주는 클래스 정보
-  ) {
+      ) {
     BufferedReader in = null;
     try {
       in = new BufferedReader(new FileReader(file));

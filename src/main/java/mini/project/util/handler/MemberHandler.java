@@ -15,6 +15,7 @@ public class MemberHandler {
   }
   
   public void manage() {
+    System.out.println("[회원관리 창입니다.]");
     switch(Prompt.inputString("명령> ")) {
       case "회원추가":
         add();
