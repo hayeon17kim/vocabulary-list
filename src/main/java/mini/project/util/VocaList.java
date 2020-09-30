@@ -9,7 +9,7 @@ public class VocaList extends ArrayList<Vocabulary> {
   private static final long serialVersionUID = 1L;
 
     String title;
-    Handler vocaHandler = new Handler(this);
+    Handler vocaHandler = new Handler();
     
       {
         add(new Vocabulary("python", "파이썬", "python is love"));
@@ -72,11 +72,10 @@ public class VocaList extends ArrayList<Vocabulary> {
 
   public class Handler {
 
-
     VocaList list;
 
-    public Handler(VocaList list) {
-      this.list = list;
+    public Handler() {
+      this.list = VocaList.this;
     }
 
     public void add() {
