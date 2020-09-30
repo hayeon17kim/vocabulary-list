@@ -72,10 +72,7 @@ public class VocaList extends ArrayList<Vocabulary> {
 
   public class Handler {
 
-    VocaList list;
-
     public Handler() {
-      this.list = VocaList.this;
     }
 
     public void add() {
@@ -97,13 +94,13 @@ public class VocaList extends ArrayList<Vocabulary> {
 
       voca.setPart(part);
 
-      list.add(voca);
+      VocaList.this.add(voca);
     }
 
     public void list() {
       System.out.println("단어목록");
-      for (int i = 0; i < list.size(); i++) {
-        Vocabulary voca = list.get(i);
+      for (int i = 0; i < VocaList.this.size(); i++) {
+        Vocabulary voca = VocaList.this.get(i);
         System.out.println("==============================================");
         if (voca.getBookmark())
           System.out.printf("   %-40s***\n", voca.getWord());
@@ -150,12 +147,12 @@ public class VocaList extends ArrayList<Vocabulary> {
         System.out.println("단어 삭제를 취소했습니다.");
         return;
       }
-      list.remove(voca);
+      VocaList.this.remove(voca);
 
     }
 
     public Vocabulary findByWord(String word) {
-      for (Vocabulary voca : list) {
+      for (Vocabulary voca : VocaList.this) {
         if (word.equals(voca.getWord())) {
           return voca;
         }
@@ -189,27 +186,27 @@ public class VocaList extends ArrayList<Vocabulary> {
 
     public void quiz() {
       Random random = new Random();
-      boolean[] order = new boolean[list.size()];
+      boolean[] order = new boolean[VocaList.this.size()];
       int correct= 0;
 
       int testTimes;
       do {
-        testTimes = Prompt.inputInt(String.format("몇 문제를 푸시겠습니까?(최대 %d) ", list.size()));
-        if (testTimes > list.size())
-          System.out.printf("최대 %d개의 문제만 풀 수 있습니다.", list.size());
-      } while (testTimes > list.size());
+        testTimes = Prompt.inputInt(String.format("몇 문제를 푸시겠습니까?(최대 %d) ", VocaList.this.size()));
+        if (testTimes > VocaList.this.size())
+          System.out.printf("최대 %d개의 문제만 풀 수 있습니다.", VocaList.this.size());
+      } while (testTimes > VocaList.this.size());
 
       for (int i = 0; i < testTimes; i++) {
         int x;
         while(true) {
-          x = random.nextInt(list.size());
+          x = random.nextInt(VocaList.this.size());
           if (!order[x]) {
             order[x] = true;
             break;
           }
         }
 
-        Vocabulary voca = list.get(x);
+        Vocabulary voca = VocaList.this.get(x);
         System.out.println("다음 뜻에 맞는 단어를 입력하세요.");
         String response = Prompt.inputString(String.format("%d. %s : ", i + 1, voca.getMeaning()));
 
