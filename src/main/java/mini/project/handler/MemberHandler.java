@@ -1,4 +1,4 @@
-package mini.project.util.handler;
+package mini.project.handler;
 
 import java.util.ArrayList;
 import java.util.List;

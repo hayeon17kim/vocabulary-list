@@ -12,8 +12,8 @@ import java.util.Collection;
 import java.util.List;
 import com.google.gson.Gson;
 import mini.project.domain.Member;
+import mini.project.handler.MemberHandler;
 import mini.project.util.Prompt;
-import mini.project.util.handler.MemberHandler;
 
 public class App {
   static List<Member> memberList = new ArrayList<Member>();
@@ -23,8 +23,6 @@ public class App {
 
   public static void main(String[] args) {
     loadObjects(memberList, memberFile, Member[].class);
-    memberList.add(new Member());
-    boolean isEmpty = true;
 
     mainLoop:
       while (true) {
@@ -47,7 +45,7 @@ public class App {
           }
 
         } else {
-          loggedInLoop: while (loggedInMember != null) {
+          loggedInLoop: while (!loggedInMember.selected()) {
             System.out.printf("[%s님의 단어장을 추가하거나 선택해주세요!]\n", loggedInMember.getName());
             loggedInMember.listVocaList();
             switch (Prompt.inputString("명령> ")) {
@@ -56,8 +54,8 @@ public class App {
                 break;
               case "단어장선택":
                 loggedInMember.setCurrentVocaList();
-                isEmpty = false;
-                vocaListLoop : while (!isEmpty) {
+
+                vocaListLoop : while (loggedInMember.selected()) {
                   System.out.printf("[%s]\n", loggedInMember.getCurrentVocaList().getTitle());
                   switch (Prompt.inputString("명령> ")) {
                     case "퀴즈":
@@ -81,13 +79,14 @@ public class App {
                     case "북마크취소":
                       loggedInMember.cancelBookmarkVoca();
                     case "로그아웃":
+                      loggedInMember.clear();
                       loggedInMember = null;
                       break loggedInLoop;
                     case "단어장나가기":
-                      loggedInMember.setCurrentVocaList()
-                      isEmpty = true;
+                      loggedInMember.clear();
                       break;
                     case "종료":
+                      loggedInMember.clear();
                       break mainLoop;
                     default:
                       System.out.println("유효하지 않은 명령어!");

@@ -13,7 +13,7 @@ public class Member implements Serializable {
   private String name;
   private String id;
   private String password;
-  
+
   private VocaList currentVocaList;
 
   public Member() {
@@ -22,7 +22,7 @@ public class Member implements Serializable {
     this.password = "1234";
   }
   HashMap<String, VocaList> vocaListMap = new HashMap<String, VocaList>();
- 
+
   public String getName() {
     return name;
   }
@@ -52,12 +52,12 @@ public class Member implements Serializable {
     return vocaListMap.get(Prompt.inputString("단어장 이름 : "));
   }
 
-  
-  public VocaList getCurrentVocaList() { 
+
+  public VocaList getCurrentVocaList() {
     return currentVocaList;
 
   }
-    
+
   public void setCurrentVocaList() {
     this.currentVocaList = findVocaList();
   }
@@ -91,7 +91,7 @@ public class Member implements Serializable {
     currentVocaList.cancleBookmarkVoca();
   }
 
-  
+
   public void listVocaList() {
     System.out.println("[단어장 목록]");
     for (String key : vocaListMap.keySet())
@@ -106,6 +106,14 @@ public class Member implements Serializable {
 
   public void deleteVocaList() {
     System.out.println("[단어장 삭제]");
-   vocaListMap.remove(Prompt.inputString("단어장 이름 : "));
+    vocaListMap.remove(Prompt.inputString("단어장 이름 : "));
+  }
+
+  public void clear() {
+    currentVocaList = null;
+  }
+
+  public boolean selected() {
+    return currentVocaList != null;
   }
 }
