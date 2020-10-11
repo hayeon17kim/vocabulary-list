@@ -109,7 +109,7 @@ public class VocaList extends ArrayList<Vocabulary> {
         System.out.println("==============================================");
         System.out.printf("   뜻     : %s\n", voca.getMeaning());
         if (voca.getPart() != 0)
-          System.out.printf("   품사   : %s\n", voca.getPart());
+          System.out.printf("   품사   : %s\n", Vocabulary.partToString(voca.getPart()));
         if (voca.getLevel() != 0)
           System.out.printf("   난이도 : %s\n", voca.getLevel());
         if (voca.getExSentence() != null)

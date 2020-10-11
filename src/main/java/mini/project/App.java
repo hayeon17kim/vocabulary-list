@@ -135,7 +135,7 @@ public class App {
     }
   }
 
-  private static <T> void loadObjects(Collection<T> list, // 객체를 담을 컬렉션
+  static <T> void loadObjects(Collection<T> list, // 객체를 담을 컬렉션
       File file, // JSON 문자열이 저장된 파일
       Class<T[]> clazz // JSON 문자열을 어떤 타입의 배열로 만들 것인지 알려 주는 클래스 정보
       ) {
