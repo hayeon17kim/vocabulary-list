@@ -23,6 +23,10 @@ public class Member implements Serializable {
   }
   HashMap<String, VocaList> vocaListMap = new HashMap<String, VocaList>();
 
+  public HashMap<String, VocaList> getVocaListMap() {
+    return vocaListMap;
+  }
+
   public String getName() {
     return name;
   }

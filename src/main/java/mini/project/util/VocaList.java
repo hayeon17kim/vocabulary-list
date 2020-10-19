@@ -8,66 +8,66 @@ import mini.project.domain.Vocabulary;
 public class VocaList extends ArrayList<Vocabulary> {
   private static final long serialVersionUID = 1L;
 
-    String title;
-    Handler vocaHandler = new Handler();
-    
-      {
-        add(new Vocabulary("python", "파이썬", "python is love"));
-        add(new Vocabulary("javascript", "자바스크립트", "javaScript is not java"));
-        add(new Vocabulary("java", "자바", "we love java"));
-        add(new Vocabulary("kotlin", "코틀린", "kotlin is java's neighborhood"));
-        add(new Vocabulary("go", "고", "Let's go!"));
-        add(new Vocabulary("ruby", "루비", "I want Ruby"));
-        add(new Vocabulary("c", "씨", "C is old languege"));
-      }
+  String title;
+  Handler vocaHandler = new Handler();
 
-    public VocaList(String title) {
-      this.title = title;
-    }
+  {
+    add(new Vocabulary("python", "파이썬", "python is love"));
+    add(new Vocabulary("javascript", "자바스크립트", "javaScript is not java"));
+    add(new Vocabulary("java", "자바", "we love java"));
+    add(new Vocabulary("kotlin", "코틀린", "kotlin is java's neighborhood"));
+    add(new Vocabulary("go", "고", "Let's go!"));
+    add(new Vocabulary("ruby", "루비", "I want Ruby"));
+    add(new Vocabulary("c", "씨", "C is old languege"));
+  }
 
-    public String getTitle() {
-      return title;
-    }
+  public VocaList(String title) {
+    this.title = title;
+  }
 
-    public void setTitle(String title) {
-      this.title = title;
-    }
+  public String getTitle() {
+    return title;
+  }
 
-    public Handler getVocaHandler() {
-      return vocaHandler;
-    }
+  public void setTitle(String title) {
+    this.title = title;
+  }
 
-    public void setVocaHandler(Handler vocaHandler) {
-      this.vocaHandler = vocaHandler;
-    }
+  public Handler getVocaHandler() {
+    return vocaHandler;
+  }
 
-    public void addVoca() {
-        vocaHandler.add();
-    }
+  public void setVocaHandler(Handler vocaHandler) {
+    this.vocaHandler = vocaHandler;
+  }
 
-    public void listVoca() {
-        vocaHandler.list();
-    }
+  public void addVoca() {
+    vocaHandler.add();
+  }
 
-    public void updateVoca() {
-      vocaHandler.update();
-    }
+  public void listVoca() {
+    vocaHandler.list();
+  }
 
-    public void deleteVoca() {
-      vocaHandler.delete();
-    }
+  public void updateVoca() {
+    vocaHandler.update();
+  }
 
-    public void bookmarkVoca() {
-      vocaHandler.bookmark();
-    }
+  public void deleteVoca() {
+    vocaHandler.delete();
+  }
 
-    public void cancleBookmarkVoca() {
-      vocaHandler.cancelBookmark();
-    }
+  public void bookmarkVoca() {
+    vocaHandler.bookmark();
+  }
 
-    public void quiz() {
-      vocaHandler.quiz();
-    }
+  public void cancleBookmarkVoca() {
+    vocaHandler.cancelBookmark();
+  }
+
+  public void quiz() {
+    vocaHandler.quiz();
+  }
 
 
   public class Handler {
@@ -77,8 +77,13 @@ public class VocaList extends ArrayList<Vocabulary> {
 
     public void add() {
       System.out.println("단어추가");
+      Vocabulary newVoca = inputVocaInfo();
+      VocaList.this.add(newVoca);
+    }
+
+    public Vocabulary inputVocaInfo() {
       Vocabulary voca = new Vocabulary();
-      
+
       voca.setWord(Prompt.inputString("단어? "));
       voca.setMeaning(Prompt.inputString("뜻? "));
       voca.setExSentence(Prompt.inputString("예제? "));
@@ -93,28 +98,14 @@ public class VocaList extends ArrayList<Vocabulary> {
       }
 
       voca.setPart(part);
-
-      VocaList.this.add(voca);
+      return voca;
     }
 
     public void list() {
       System.out.println("단어목록");
       for (int i = 0; i < VocaList.this.size(); i++) {
         Vocabulary voca = VocaList.this.get(i);
-        System.out.println("==============================================");
-        if (voca.getBookmark())
-          System.out.printf("   %-40s***\n", voca.getWord());
-        else
-          System.out.printf("   %s\n", voca.getWord());
-        System.out.println("==============================================");
-        System.out.printf("   뜻     : %s\n", voca.getMeaning());
-        if (voca.getPart() != 0)
-          System.out.printf("   품사   : %s\n", Vocabulary.partToString(voca.getPart()));
-        if (voca.getLevel() != 0)
-          System.out.printf("   난이도 : %s\n", voca.getLevel());
-        if (voca.getExSentence() != null)
-          System.out.printf("   <예문>\n%s\n", voca.getExSentence());
-        System.out.println("==============================================");
+        detail(voca);
       }
     }
 
@@ -126,11 +117,28 @@ public class VocaList extends ArrayList<Vocabulary> {
         System.out.println("찾으시는 단어가 없습니다.");
         return;
       }
-      voca.setWord(Prompt.inputString(String.format("단어(%s)?", voca.getWord())));
-      voca.setMeaning(Prompt.inputString(String.format("뜻(%s)?", voca.getMeaning())));
-      voca.setExSentence(Prompt.inputString(String.format("예제(%s)?", voca.getExSentence())));
-      voca.setLevel(Prompt.inputInt(String.format("레벨(%s)?", voca.getLevel())));
-      voca.setPart(Vocabulary.stringToPart(Prompt.inputString(String.format("품사(%s)?", Vocabulary.partToString(voca.getPart())))));
+
+      detail(voca);
+
+      voca = inputVocaInfo();
+    }
+
+    public void detail(Vocabulary voca) {
+      System.out.println("==============================================");
+      if (voca.getBookmark())
+        System.out.printf("   %-40s***\n", voca.getWord());
+      else
+        System.out.printf("   %s\n", voca.getWord());
+      System.out.println("==============================================");
+      System.out.printf("   뜻     : %s\n", voca.getMeaning());
+      if (voca.getPart() != 0)
+        System.out.printf("   품사   : %s\n", Vocabulary.partToString(voca.getPart()));
+      if (voca.getLevel() != 0)
+        System.out.printf("   난이도 : %s\n", voca.getLevel());
+      if (voca.getExSentence() != null)
+        System.out.printf("   <예문>\n%s\n", voca.getExSentence());
+      System.out.println("==============================================");
+
     }
 
 
@@ -185,28 +193,15 @@ public class VocaList extends ArrayList<Vocabulary> {
     }
 
     public void quiz() {
-      Random random = new Random();
-      boolean[] order = new boolean[VocaList.this.size()];
+
       int correct= 0;
+      int testTimes = testTimes();
 
-      int testTimes;
-      do {
-        testTimes = Prompt.inputInt(String.format("몇 문제를 푸시겠습니까?(최대 %d) ", VocaList.this.size()));
-        if (testTimes > VocaList.this.size())
-          System.out.printf("최대 %d개의 문제만 풀 수 있습니다.", VocaList.this.size());
-      } while (testTimes > VocaList.this.size());
-
+      boolean[] order = new boolean[testTimes];
       for (int i = 0; i < testTimes; i++) {
-        int x;
-        while(true) {
-          x = random.nextInt(VocaList.this.size());
-          if (!order[x]) {
-            order[x] = true;
-            break;
-          }
-        }
-
-        Vocabulary voca = VocaList.this.get(x);
+        int thisQuizNum = randomQuiz(testTimes, order);
+        
+        Vocabulary voca = VocaList.this.get(thisQuizNum);
         System.out.println("다음 뜻에 맞는 단어를 입력하세요.");
         String response = Prompt.inputString(String.format("%d. %s : ", i + 1, voca.getMeaning()));
 
@@ -222,5 +217,28 @@ public class VocaList extends ArrayList<Vocabulary> {
       System.out.println("시험이 완료되었습니다.");
       System.out.printf("%d 문제 중 %d개 단어를 맞추었습니다!\n", testTimes, correct);
     }
+  }
+
+  private int testTimes() {
+    int testTimes;
+    do {
+      testTimes = Prompt.inputInt(String.format("몇 문제를 푸시겠습니까?(최대 %d) ", VocaList.this.size()));
+      if (testTimes > VocaList.this.size())
+        System.out.printf("최대 %d개의 문제만 풀 수 있습니다.", VocaList.this.size());
+    } while (testTimes > VocaList.this.size());
+    return testTimes;
+  }
+
+  private int randomQuiz(int testTimes, boolean[] order) {
+    Random random = new Random();
+    int result;
+    while(true) {
+      result = random.nextInt(testTimes);
+      if (!order[result]) {
+        order[result] = true;
+        break;
+      }
+    }
+    return result;
   }
 }

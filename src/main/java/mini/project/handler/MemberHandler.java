@@ -2,9 +2,10 @@ package mini.project.handler;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import mini.project.domain.Member;
-import mini.project.domain.Vocabulary;
 import mini.project.util.Prompt;
+import mini.project.util.VocaList;
 
 public class MemberHandler {
 
@@ -37,22 +38,31 @@ public class MemberHandler {
 
   public void add() {
     System.out.println("회원추가");
+    Member newMember = inputMemberInfo();
+    memberList.add(newMember);
+  }
+  
+  public Member inputMemberInfo() {
     Member member = new Member();
     member.setName(Prompt.inputString("이름? "));
     member.setId(Prompt.inputString("아이디? "));
     member.setPassword(Prompt.inputString("비밀번호? "));
-    memberList.add(member);
+    return member;
   }
+  
+  
 
   public void list() {
+    System.out.println("[회원목록]");
     for (Member member : memberList) {
-      System.out.printf("%s, %s\n", member.getName(), member.getId());
-      System.out.println("[단어목록]");
-      for (Vocabulary voca : member.getCurrentVocaList()) {
-        System.out.printf("%s, %s\n", voca.getWord(), voca.getMeaning());
-      }
+      detail(member);
+      System.out.print("단어장 목록 : ");
+      Map<String, VocaList> map = member.getVocaListMap();
+      for (String key : map.keySet()) 
+        System.out.print(map.get(key).getTitle() + " ");
       System.out.println();
     }
+    
   }
 
   public void delete() {
@@ -78,9 +88,17 @@ public class MemberHandler {
       System.out.println("찾으시는 단어가 없습니다.");
       return;
     }
+    
+    detail(member);
+    
     member.setName(Prompt.inputString(String.format("이름(%s)?", member.getName())));
     member.setId(Prompt.inputString(String.format("아이디(%s)?", member.getId())));
     member.setPassword(Prompt.inputString(String.format("비밀번호(%s)?", member.getPassword())));
+  }
+
+  public void detail(Member member) {
+    System.out.printf("%s, %s\n", member.getName(), member.getId());
+    
   }
 
   public Member findById(String Id) {
