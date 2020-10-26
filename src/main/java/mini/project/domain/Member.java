@@ -2,6 +2,7 @@ package mini.project.domain;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.Map;
 import mini.project.util.Prompt;
 import mini.project.util.VocaList;
 
@@ -21,10 +22,10 @@ public class Member implements Serializable {
     this.id = "admin";
     this.password = "1234";
   }
-  HashMap<String, VocaList> vocaListMap = new HashMap<String, VocaList>();
+  Map<String, VocaList> vocaListMap = new HashMap<String, VocaList>();
 
   public HashMap<String, VocaList> getVocaListMap() {
-    return vocaListMap;
+    return (HashMap<String, VocaList>) vocaListMap;
   }
 
   public String getName() {
@@ -98,14 +99,15 @@ public class Member implements Serializable {
 
   public void listVocaList() {
     System.out.println("[단어장 목록]");
-    for (String key : vocaListMap.keySet())
-      System.out.println(vocaListMap.get(key).getTitle());
+    for (String key : vocaListMap.keySet()) {
+      System.out.println(key);
+    }
   }
 
   public void addVocaList() {
     System.out.println("[단어장 추가]");
     String title = Prompt.inputString("단어장 이름 : ");
-    vocaListMap.put(title, new VocaList(title));
+    vocaListMap.put(title, new VocaList());
   }
 
   public void deleteVocaList() {

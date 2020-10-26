@@ -49,8 +49,6 @@ public class MemberHandler {
     member.setPassword(Prompt.inputString("비밀번호? "));
     return member;
   }
-  
-  
 
   public void list() {
     System.out.println("[회원목록]");
@@ -58,8 +56,9 @@ public class MemberHandler {
       detail(member);
       System.out.print("단어장 목록 : ");
       Map<String, VocaList> map = member.getVocaListMap();
-      for (String key : map.keySet()) 
-        System.out.print(map.get(key).getTitle() + " ");
+      for (String key : map.keySet()) {
+        System.out.print(key + " ");
+      }
       System.out.println();
     }
     
